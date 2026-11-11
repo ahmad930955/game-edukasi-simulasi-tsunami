@@ -1,0 +1,241 @@
+
+*, *::before, *::after {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    touch-action: none;
+    font-family: 'Gill Sans', 'Gill Sans MT',
+    Calibri, 'Trebuchet MS', sans-serif;
+    background-color: black;
+}
+
+/* JENDELA GAME */
+#jendelageme {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: black;
+}
+
+/* AREA GAME */
+#areaGame {
+    width: 420px;
+    height: 844px;
+    position: relative;
+    flex-shrink: 0;
+    overflow: hidden;
+    transform-origin: center center;
+    background-color: blue;
+}
+
+/* DUNIA GAME */
+#dunia {
+    width: 2000px;
+    height: 2000px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    will-change: transform;
+}
+
+/* MAP */
+.layar {
+    width: 2000px;
+    height: 2000px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: blue;
+    background-image: url("layar.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    z-index: 1;
+}
+
+/* ==================================
+   KARAKTER WANITA
+================================== */
+
+#karakterwanita {
+    width: 2000px;
+    height: 2000px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9;
+}
+
+.wanitadiam {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 192px;
+    height: 192px;
+    z-index: 10;
+    background-image: url("wanitadiam.png");
+    background-size: 1344px 192px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    transform: translate(-50%, -50%) scale(0.5);
+    animation: diam-terus 1s steps(7) infinite;
+}
+
+@keyframes diam-terus {
+    from {
+        background-position: 0px 0px;
+    }
+    to {
+        background-position: -1344px 0px;
+    }
+}
+
+.wanitadiam.menghadap-kiri {
+    transform: translate(-50%, -50%) scale(-0.5, 0.5);
+}
+
+.wanitadiam.berjalan {
+    background-image: url("wanitajalan.png");
+    background-size: 1920px 192px;
+    animation: jalan-terus 1s steps(10) infinite;
+}
+
+@keyframes jalan-terus {
+    from {
+        background-position: 0px 0px;
+    }
+    to {
+        background-position: -1920px 0px;
+    }
+}
+
+/* ==================================
+   KARAKTER PRIA TINGGI
+================================== */
+
+#karaktersampingan {
+    width: 2000px;
+    height: 2000px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 8;
+}
+
+.priatinggi {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 192px;
+    height: 192px;
+    background-image: url("priatinggijalan.png");
+    background-size: 1536px 192px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.priatinggi.berjalan {
+    animation: pria-jalan 1s steps(8) infinite;
+}
+
+.priatinggi.menghadap-kiri {
+    transform: translate(-50%, -50%) scale(-1, 1);
+}
+
+@keyframes pria-jalan {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -1536px 0;
+    }
+}
+
+/* ==================================
+   KARAKTER ANAK SEKOLAH
+================================== */
+
+#karakteranak {
+    width: 2000px;
+    height: 2000px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 8;
+}
+
+/* ANAK SEKOLAH DIAM */
+
+.anaksekolahdiam {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 7;
+    width: 192px;
+    height: 192px;
+
+    background-image: url("anaksekolahdiam.png");
+    background-size: 1344px 192px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+
+    transform: translate(-50%, -50%) scale(0.3);
+
+    animation: anak-diam 1s steps(8) infinite;
+}
+
+/* ANIMASI DIAM ANAK */
+
+@keyframes anak-diam {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: -1344px 0;
+    }
+}
+
+/* ANAK MENGHADAP KIRI */
+
+.anaksekolahdiam.menghadap-kiri {
+    transform: translate(-50%, -50%) scale(-0.3, 0.3);
+}
+
+/* ANAK BERJALAN */
+
+.anaksekolahdiam.berjalan {
+    background-image: url("anaksekolahjalan.png");
+    background-size: 1920px 192px;
+
+    animation: anak-jalan 1s steps(10) infinite;
+}
+
+/* ANIMASI BERJALAN ANAK */
+
+@keyframes anak-jalan {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: -1920px 0;
+    }
+}
