@@ -1,7 +1,8 @@
 
 const karakter = document.querySelector(".wanitadiam");
-const pria = document.querySelector(".priatinggi");
+const pria = document.querySelector(".priatinggidiam");
 const anak = document.querySelector(".anaksekolahdiam");
+const bocil = document.querySelector(".bocildiam");
 
 const dunia = document.querySelector("#dunia");
 const jendela = document.querySelector("#jendelageme");
@@ -10,11 +11,7 @@ const areaGame = document.querySelector("#areaGame");
 const wadahWanita = document.querySelector("#karakterwanita");
 const wadahPria = document.querySelector("#karaktersampingan");
 const wadahAnak = document.querySelector("#karakteranak");
-
-// Urutan lapisan karakter
-wadahWanita.style.zIndex = "30";
-wadahPria.style.zIndex = "20";
-wadahAnak.style.zIndex = "10";
+const wadahBocil = document.querySelector("#karakterbocil");
 
 // =====================================
 // POSISI AWAL KARAKTER
@@ -28,6 +25,9 @@ let priaY = 800;
 
 let anakX = 900;
 let anakY = 1000;
+
+let bocilX = 1100;
+let bocilY = 1100;
 
 // =====================================
 // PENGATURAN GERAK WANITA
@@ -52,19 +52,25 @@ let arahTerakhirY = 0;
 
 let priaMengikuti = false;
 let anakMengikuti = false;
+let bocilMengikuti = false;
 
 let arahHadapPria = "kanan";
 let arahHadapAnak = "kanan";
+let arahHadapBocil = "kanan";
 
 // Jarak sentuhan antar karakter
+
 const jarakSentuhPria = 110;
 const jarakSentuhAnak = 60;
+const jarakSentuhBocil = 60;
 
 // Jarak formasi pengikut
+
 const jarakFormasi = 75;
 const geserSamping = 55;
 
 // Kehalusan gerakan pengikut
+
 const kehalusanIkut = 2;
 
 // =====================================
@@ -79,6 +85,7 @@ let skalaGame = 1;
 // =====================================
 
 function aturPosisiKarakter() {
+
     karakter.style.left = posisiX + "px";
     karakter.style.top = posisiY + "px";
 
@@ -87,6 +94,41 @@ function aturPosisiKarakter() {
 
     anak.style.left = anakX + "px";
     anak.style.top = anakY + "px";
+
+    bocil.style.left = bocilX + "px";
+    bocil.style.top = bocilY + "px";
+}
+
+// =====================================
+// SISTEM Y-SORTING OTOMATIS
+// =====================================
+
+function aturUrutanLapisan() {
+
+    const objek = [
+        {
+            elemen: wadahWanita,
+            posisiY: posisiY
+        },
+        {
+            elemen: wadahPria,
+            posisiY: priaY
+        },
+        {
+            elemen: wadahAnak,
+            posisiY: anakY
+        },
+        {
+            elemen: wadahBocil,
+            posisiY: bocilY
+        }
+    ];
+
+    objek.sort((a, b) => a.posisiY - b.posisiY);
+
+    objek.forEach((objek, index) => {
+        objek.elemen.style.zIndex = index + 2;
+    });
 }
 
 // =====================================
@@ -94,6 +136,7 @@ function aturPosisiKarakter() {
 // =====================================
 
 function aturUkuranGame() {
+
     const lebar = jendela.clientWidth;
     const tinggi = jendela.clientHeight;
 
@@ -115,6 +158,7 @@ window.addEventListener("resize", aturUkuranGame);
 // =====================================
 
 function kameraFollow() {
+
     const tengahX = 420 / 2;
     const tengahY = 844 / 2;
 
@@ -130,6 +174,7 @@ function kameraFollow() {
 // =====================================
 
 function aturArahWanita(gerakX) {
+
     if (gerakX < 0) {
         karakter.classList.add("menghadap-kiri");
     } else if (gerakX > 0) {
@@ -142,6 +187,7 @@ function aturArahWanita(gerakX) {
 // =====================================
 
 areaGame.addEventListener("pointerdown", function(e) {
+
     e.preventDefault();
 
     sedangGeser = true;
@@ -156,6 +202,7 @@ areaGame.addEventListener("pointerdown", function(e) {
 });
 
 areaGame.addEventListener("pointermove", function(e) {
+
     if (!sedangGeser) return;
 
     e.preventDefault();
@@ -164,6 +211,7 @@ areaGame.addEventListener("pointermove", function(e) {
     const gerakY = (e.clientY - sentuhY) / skalaGame;
 
     if (gerakX !== 0 || gerakY !== 0) {
+
         arahX = gerakX;
         arahY = gerakY;
 
@@ -174,6 +222,7 @@ areaGame.addEventListener("pointermove", function(e) {
         );
 
         if (panjangArah > 0) {
+
             arahTerakhirX = gerakX / panjangArah;
             arahTerakhirY = gerakY / panjangArah;
         }
@@ -186,6 +235,7 @@ areaGame.addEventListener("pointermove", function(e) {
 });
 
 function berhentiMenggeser() {
+
     sedangGeser = false;
 
     arahX = 0;
@@ -203,6 +253,7 @@ areaGame.addEventListener("lostpointercapture", berhentiMenggeser);
 // =====================================
 
 function hitungJarak(x1, y1, x2, y2) {
+
     const dx = x2 - x1;
     const dy = y2 - y1;
 
@@ -214,6 +265,7 @@ function hitungJarak(x1, y1, x2, y2) {
 // =====================================
 
 function cekSentuhanPria() {
+
     if (priaMengikuti) return;
 
     const jarak = hitungJarak(
@@ -233,6 +285,7 @@ function cekSentuhanPria() {
 // =====================================
 
 function cekSentuhanAnak() {
+
     if (anakMengikuti) return;
 
     const jarak = hitungJarak(
@@ -248,10 +301,31 @@ function cekSentuhanAnak() {
 }
 
 // =====================================
+// DETEKSI SENTUHAN WANITA DAN BOCIL
+// =====================================
+
+function cekSentuhanBocil() {
+
+    if (bocilMengikuti) return;
+
+    const jarak = hitungJarak(
+        posisiX,
+        posisiY,
+        bocilX,
+        bocilY
+    );
+
+    if (jarak <= jarakSentuhBocil) {
+        bocilMengikuti = true;
+    }
+}
+
+// =====================================
 // MENGHITUNG POSISI DI BELAKANG WANITA
 // =====================================
 
 function hitungPosisiBelakang(depanX, depanY, jarak, sisi) {
+
     const belakangX = -arahTerakhirX;
     const belakangY = -arahTerakhirY;
 
@@ -269,6 +343,7 @@ function hitungPosisiBelakang(depanX, depanY, jarak, sisi) {
 // =====================================
 
 function aturArahPengikut(karakterPengikut, dx) {
+
     if (dx < -0.5) {
         karakterPengikut.classList.add("menghadap-kiri");
     } else if (dx > 0.5) {
@@ -281,6 +356,7 @@ function aturArahPengikut(karakterPengikut, dx) {
 // =====================================
 
 function gerakkanPria(deltaTime) {
+
     if (!priaMengikuti) return;
 
     const target = hitungPosisiBelakang(
@@ -302,9 +378,12 @@ function gerakkanPria(deltaTime) {
     priaY += dy * faktorHalus;
 
     if (jarak > 1) {
+
         pria.classList.add("berjalan");
         aturArahPengikut(pria, dx);
+
     } else {
+
         pria.classList.remove("berjalan");
     }
 }
@@ -314,6 +393,7 @@ function gerakkanPria(deltaTime) {
 // =====================================
 
 function gerakkanAnak(deltaTime) {
+
     if (!anakMengikuti) return;
 
     const target = hitungPosisiBelakang(
@@ -335,10 +415,50 @@ function gerakkanAnak(deltaTime) {
     anakY += dy * faktorHalus;
 
     if (jarak > 1) {
+
         anak.classList.add("berjalan");
         aturArahPengikut(anak, dx);
+
     } else {
+
         anak.classList.remove("berjalan");
+    }
+}
+
+// =====================================
+// GERAK BOCIL MENGIKUTI WANITA
+// =====================================
+
+function gerakkanBocil(deltaTime) {
+
+    if (!bocilMengikuti) return;
+
+    const target = hitungPosisiBelakang(
+        posisiX,
+        posisiY,
+        jarakFormasi,
+        0
+    );
+
+    const dx = target.x - bocilX;
+    const dy = target.y - bocilY;
+
+    const jarak = Math.sqrt(dx * dx + dy * dy);
+
+    const faktorHalus =
+        1 - Math.exp(-kehalusanIkut * deltaTime);
+
+    bocilX += dx * faktorHalus;
+    bocilY += dy * faktorHalus;
+
+    if (jarak > 1) {
+
+        bocil.classList.add("berjalan");
+        aturArahPengikut(bocil, dx);
+
+    } else {
+
+        bocil.classList.remove("berjalan");
     }
 }
 
@@ -347,6 +467,7 @@ function gerakkanAnak(deltaTime) {
 // =====================================
 
 function gameLoop(waktuSekarang) {
+
     if (!waktuSebelumnya) {
         waktuSebelumnya = waktuSekarang;
     }
@@ -357,12 +478,15 @@ function gameLoop(waktuSekarang) {
     waktuSebelumnya = waktuSekarang;
 
     // Gerakan wanita tetap 100 px per detik
+
     if (sedangGeser && (arahX !== 0 || arahY !== 0)) {
+
         const panjangArah = Math.sqrt(
             arahX * arahX + arahY * arahY
         );
 
         if (panjangArah > 0) {
+
             const normalX = arahX / panjangArah;
             const normalY = arahY / panjangArah;
 
@@ -372,17 +496,27 @@ function gameLoop(waktuSekarang) {
     }
 
     // Periksa sentuhan wanita dengan masing-masing karakter
+
     cekSentuhanPria();
     cekSentuhanAnak();
+    cekSentuhanBocil();
 
     // Pengikut bergerak otomatis setelah tersentuh
+
     gerakkanPria(deltaTime);
     gerakkanAnak(deltaTime);
+    gerakkanBocil(deltaTime);
 
     // Perbarui posisi seluruh karakter
+
     aturPosisiKarakter();
 
+    // Atur urutan lapisan berdasarkan posisi Y
+
+    aturUrutanLapisan();
+
     // Kamera hanya mengikuti wanita
+
     kameraFollow();
 
     requestAnimationFrame(gameLoop);
@@ -393,6 +527,7 @@ function gameLoop(waktuSekarang) {
 // =====================================
 
 aturPosisiKarakter();
+aturUrutanLapisan();
 aturUkuranGame();
 
 requestAnimationFrame(gameLoop);

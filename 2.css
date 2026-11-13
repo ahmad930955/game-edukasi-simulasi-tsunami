@@ -21,6 +21,7 @@ html, body {
 }
 
 /* JENDELA GAME */
+
 #jendelageme {
     width: 100%;
     height: 100%;
@@ -34,6 +35,7 @@ html, body {
 }
 
 /* AREA GAME */
+
 #areaGame {
     width: 420px;
     height: 844px;
@@ -45,6 +47,7 @@ html, body {
 }
 
 /* DUNIA GAME */
+
 #dunia {
     width: 2000px;
     height: 2000px;
@@ -56,6 +59,7 @@ html, body {
 }
 
 /* MAP */
+
 .layar {
     width: 2000px;
     height: 2000px;
@@ -70,16 +74,26 @@ html, body {
 }
 
 /* ==================================
-   KARAKTER WANITA
+   WADAH KARAKTER
 ================================== */
 
-#karakterwanita {
+#karakterwanita,
+#karaktersampingan,
+#karakteranak,
+#karakterbocil {
     width: 2000px;
     height: 2000px;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 9;
+}
+
+/* ==================================
+   KARAKTER WANITA
+================================== */
+
+#karakterwanita {
+    z-index: 2;
 }
 
 .wanitadiam {
@@ -88,12 +102,15 @@ html, body {
     left: 0;
     width: 192px;
     height: 192px;
-    z-index: 10;
+    z-index: 1;
+
     background-image: url("wanitadiam.png");
     background-size: 1344px 192px;
     background-repeat: no-repeat;
     background-position: 0 0;
+
     transform: translate(-50%, -50%) scale(0.5);
+
     animation: diam-terus 1s steps(7) infinite;
 }
 
@@ -101,6 +118,7 @@ html, body {
     from {
         background-position: 0px 0px;
     }
+
     to {
         background-position: -1344px 0px;
     }
@@ -120,6 +138,7 @@ html, body {
     from {
         background-position: 0px 0px;
     }
+
     to {
         background-position: -1920px 0px;
     }
@@ -130,39 +149,52 @@ html, body {
 ================================== */
 
 #karaktersampingan {
-    width: 2000px;
-    height: 2000px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 8;
+    z-index: 2;
 }
 
-.priatinggi {
+.priatinggidiam {
     position: absolute;
     top: 0;
     left: 0;
     width: 192px;
     height: 192px;
-    background-image: url("priatinggijalan.png");
+    z-index: 1;
+
+    background-image: url("priatinggidiam.png");
     background-size: 1536px 192px;
     background-repeat: no-repeat;
     background-position: 0 0;
-    transform: translate(-50%, -50%) scale(1);
+
+    transform: translate(-50%, -50%) scale(0.8);
+
+    animation: pria-diam 1s steps(8) infinite;
 }
 
-.priatinggi.berjalan {
+@keyframes pria-diam {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: -1536px 0;
+    }
+}
+
+.priatinggidiam.menghadap-kiri {
+    transform: translate(-50%, -50%) scale(-0.8, 0.8);
+}
+
+.priatinggidiam.berjalan {
+    background-image: url("priatinggijalan.png");
+    background-size: 1536px 192px;
     animation: pria-jalan 1s steps(8) infinite;
-}
-
-.priatinggi.menghadap-kiri {
-    transform: translate(-50%, -50%) scale(-1, 1);
 }
 
 @keyframes pria-jalan {
     from {
         background-position: 0 0;
     }
+
     to {
         background-position: -1536px 0;
     }
@@ -173,21 +205,14 @@ html, body {
 ================================== */
 
 #karakteranak {
-    width: 2000px;
-    height: 2000px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 8;
+    z-index: 2;
 }
-
-/* ANAK SEKOLAH DIAM */
 
 .anaksekolahdiam {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 7;
+    z-index: 1;
     width: 192px;
     height: 192px;
 
@@ -201,8 +226,6 @@ html, body {
     animation: anak-diam 1s steps(8) infinite;
 }
 
-/* ANIMASI DIAM ANAK */
-
 @keyframes anak-diam {
     from {
         background-position: 0 0;
@@ -213,22 +236,15 @@ html, body {
     }
 }
 
-/* ANAK MENGHADAP KIRI */
-
 .anaksekolahdiam.menghadap-kiri {
     transform: translate(-50%, -50%) scale(-0.3, 0.3);
 }
 
-/* ANAK BERJALAN */
-
 .anaksekolahdiam.berjalan {
     background-image: url("anaksekolahjalan.png");
     background-size: 1920px 192px;
-
     animation: anak-jalan 1s steps(10) infinite;
 }
-
-/* ANIMASI BERJALAN ANAK */
 
 @keyframes anak-jalan {
     from {
@@ -237,5 +253,61 @@ html, body {
 
     to {
         background-position: -1920px 0;
+    }
+}
+
+/* ==================================
+   KARAKTER BOCIL
+================================== */
+
+#karakterbocil {
+    z-index: 2;
+}
+
+.bocildiam {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 192px;
+    height: 192px;
+
+    background-image: url("bocildiam.png");
+    background-size: 1152px 192px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+
+    transform: translate(-50%, -50%) scale(0.3);
+
+    animation: bocil-diam 1s steps(6) infinite;
+}
+
+@keyframes bocil-diam {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: -1152px 0;
+    }
+}
+
+.bocildiam.menghadap-kiri {
+    transform: translate(-50%, -50%) scale(-0.3, 0.3);
+}
+
+.bocildiam.berjalan {
+    background-image: url("bociljalan.png");
+    background-size: 1152px 192px;
+    animation: bocil-jalan 1s steps(6) infinite;
+}
+
+@keyframes bocil-jalan {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: -1152px 0;
     }
 }
